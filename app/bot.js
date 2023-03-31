@@ -1,0 +1,89 @@
+const venomBot = require('venom-bot')
+const path = require('path')
+const Functions = require(path.resolve(__dirname, 'database', 'Functions'))//('./database/Functions')
+const funcs = new Functions()
+
+module.exports = () => venomBot.create({
+    session: this.session,
+    folderNameToken: 'tokens',
+    headless: false,
+    devtools: false,
+    useChrome: true,
+    debug: false,
+    logQR: true,
+    browserArgs: [
+        '--log-level=3',
+        '--no-default-browser-check',
+        '--disable-site-isolation-trials',
+        '--no-experiments',
+        '--ignore-gpu-blacklist',
+        '--ignore-certificate-errors',
+        '--ignore-certificate-errors-spki-list',
+        '--disable-gpu',
+        '--disable-extensions',
+        '--disable-default-apps',
+        '--enable-features=NetworkService',
+        '--disable-setuid-sandbox',
+        '--no-sandbox',
+        // Extras
+        '--disable-webgl',
+        '--disable-threaded-animation',
+        '--disable-threaded-scrolling',
+        '--disable-in-process-stack-traces',
+        '--disable-histogram-customizer',
+        '--disable-gl-extensions',
+        '--disable-composited-antialiasing',
+        '--disable-canvas-aa',
+        '--disable-3d-apis',
+        '--disable-accelerated-2d-canvas',
+        '--disable-accelerated-jpeg-decoding',
+        '--disable-accelerated-mjpeg-decode',
+        '--disable-app-list-dismiss-on-blur',
+        '--disable-accelerated-video-decode',
+    ],
+    refreshQR: 15000,
+    autoClose: 60000,
+    disableSpins: true,
+    disableWelcome: false,
+    createPathFileToken: true,
+    waitForLogin: true
+}).then(client => {
+    this.client = client
+    process.on('SIGINT', () => {
+        client.close();
+    })
+    client.onMessage(async (message) => {
+        const database = funcs.connect_db()
+        if(!message.isGouping && message.body){ //Mensagens contidas e Únicas
+            const client = {
+                bot_watch: true,
+                pushname: message.sender.pushname,
+                from_user: message.from,
+                number: message.from.replace('@c.us', ""),
+                data_cadastro: 'hoje',
+                hora_cadastro: 'agora'
+            }
+            const msg = {
+                is_bot_msg: false,
+                from_user: message.from,
+                msg_user: message.body,
+                user_msg_data: 'hoje',
+                user_msg_hora: 'agora'
+            }
+            // await client.sendText(message.from, 'Teste de Atendimento com Robô')
+            funcs.hasClient(database, client, true)
+            funcs.regMessage(database, msg)
+
+            funcs.closeDatabase(database)
+        }
+        if(message.isGouping){ //Mensagens de Grupo
+            return console.log('Mensagem de Grupo Recebida')
+        }
+    })
+    client.onIncomingCall(async (call) => {
+        console.log(call);
+        await client.sendText(call.peerJid, `${bot_title} Agradeço sua Chamada`);
+    })
+}).catch(e => {
+    return e
+})
