@@ -1,3 +1,4 @@
 node_modules
 tokens
 util
+./app/database/database.db
