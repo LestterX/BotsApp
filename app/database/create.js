@@ -24,7 +24,7 @@ class Create{
             db.run(`CREATE TABLE IF NOT EXISTS clientes(
                 id INTEGER NOT NULL PRIMARY KEY,
                 bot_watch TEXT NOT NULL,
-                pushname TEXT NOT NULL,
+                pushname TEXT,
                 from_user TEXT NOT NULL,
                 number TEXT NOT NULL,
                 data_cadastro TEXT NOT NULL,

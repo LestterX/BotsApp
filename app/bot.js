@@ -3,6 +3,7 @@ const path = require('path')
 const Functions = require(path.resolve(__dirname, 'database', 'Functions'))//('./database/Functions')
 const funcs = new Functions()
 
+
 module.exports = () => venomBot.create({
     session: this.session,
     folderNameToken: 'tokens',
@@ -60,15 +61,15 @@ module.exports = () => venomBot.create({
                 pushname: message.sender.pushname,
                 from_user: message.from,
                 number: message.from.replace('@c.us', ""),
-                data_cadastro: 'hoje',
-                hora_cadastro: 'agora'
+                data_cadastro: getData(),
+                hora_cadastro: getTime()
             }
             const msg = {
                 is_bot_msg: false,
                 from_user: message.from,
                 msg_user: message.body,
-                user_msg_data: 'hoje',
-                user_msg_hora: 'agora'
+                user_msg_data: getData(),
+                user_msg_hora: getTime()
             }
             // await client.sendText(message.from, 'Teste de Atendimento com Robô')
             funcs.hasClient(database, client, true)
@@ -87,3 +88,14 @@ module.exports = () => venomBot.create({
 }).catch(e => {
     return e
 })
+
+function getData(){
+    const data = new Date()
+    let date = `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`
+    return date
+}
+function getTime(){
+    const data = new Date()
+    let hora = `${data.getHours()}:${data.getMinutes()}:${data.getSeconds()}`
+    return hora
+}
