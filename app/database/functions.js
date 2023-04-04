@@ -55,6 +55,7 @@ class Functions{
         msg = `Registrando: ${client['from_user']}`
         this.writeLog(msg, database)
         console.log(msg);
+        if(client['pushname'] === undefined) client['pushname'] = null
         const client_data = Object.values(client)
         await database.run('INSERT INTO clientes(bot_watch, pushname, from_user, number, data_cadastro, hora_cadastro) VALUES(?, ?, ?, ?, ?, ?)', client_data, err => {
             if(err){
@@ -69,7 +70,7 @@ class Functions{
             return console.log(msg, this.lastID, this.changes);
         })
     }
-    async regMessage(database, message){
+    async regMessageUser(database, message){
         let msg = ''
         msg = `Registrando mensagem: ${message['msg_user']}`
         this.writeLog(msg, database)
@@ -88,6 +89,32 @@ class Functions{
             return console.log(msg);
         })
     }
+    async getResposta(database, msg, client){
+        await database.each('SELECT palavra_chave FROM atendimentos', [], (err, result) => {
+            let resposta = ''
+            if (err) throw err
+            let atendimento = Object.values(result)[0]
+            console.log(atendimento)
+            if(msg.msg_user.toLowerCase().includes(atendimento)){
+                resposta += 'Teste de atendimento com robô'
+                this.sendResposta(msg.from_user, resposta, client)
+            }
+        })
+    }
+    async sendResposta(from, msg, client){
+        await client.sendText(from, msg)
+    }
+    // async getAtendimento(database, msge, client){
+    //     const chat_msg = msge.msg_user.toLowerCase()
+    //     const chat_from = msge.from_user
+    //     console.log(chat_msg);
+    //     await database.get('SELECT * FROM atendimentos WHERE palavra_chave=?', [chat_msg], (err, result) => {
+    //         if(err) throw err
+    //         if(chat_msg.includes())
+    //         console.log('Dados da tabela: ', );
+    //         console.log(chat_from, chat_msg);
+    //     })
+    // }
     async closeDatabase(database){
         let msg = ''
         msg = 'Fechando conexão com o banco de dados'

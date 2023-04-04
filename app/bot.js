@@ -56,9 +56,16 @@ module.exports = () => venomBot.create({
     client.onMessage(async (message) => {
         const database = funcs.connect_db()
         if(!message.isGouping && message.body){ //Mensagens contidas e Únicas
-            const client = {
+            let pushname = null
+            try{
+                pushname = message.sender.pushname
+            }catch(e){
+                pushname = null
+            }
+            // if(message.sender.pushname === undefined) message.sender.pushname
+            const cliente = {
                 bot_watch: true,
-                pushname: message.sender.pushname,
+                pushname: pushname,
                 from_user: message.from,
                 number: message.from.replace('@c.us', ""),
                 data_cadastro: getData(),
@@ -72,9 +79,10 @@ module.exports = () => venomBot.create({
                 user_msg_hora: getTime()
             }
             // await client.sendText(message.from, 'Teste de Atendimento com Robô')
-            funcs.hasClient(database, client, true)
-            funcs.regMessage(database, msg)
-
+            funcs.hasClient(database, cliente, true)
+            funcs.regMessageUser(database, msg)
+            //await client.sendText(msg['from_user'], 
+            funcs.getResposta(database, msg, client)
             funcs.closeDatabase(database)
         }
         if(message.isGouping){ //Mensagens de Grupo
