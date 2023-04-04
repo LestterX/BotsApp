@@ -90,31 +90,39 @@ class Functions{
         })
     }
     async getResposta(database, msg, client){
-        await database.each('SELECT palavra_chave FROM atendimentos', [], (err, result) => {
-            let resposta = ''
-            if (err) throw err
-            let atendimento = Object.values(result)[0]
-            console.log(atendimento)
-            if(msg.msg_user.toLowerCase().includes(atendimento)){
-                resposta += 'Teste de atendimento com robô'
-                this.sendResposta(msg.from_user, resposta, client)
-            }
+        await database.serialize(() => {
+            database.each('SELECT palavra_chave FROM atendimentos', [], (err, result) => {
+                let resposta = ''
+                if (err) throw err
+                let atendimento = Object.values(result)[0]
+                if(msg.msg_user.toLowerCase().includes(atendimento)){
+                    database.get('SELECT * FROM atendimentos WHERE palavra_chave=?', [atendimento], (err, result) => {
+                        if (err) throw err
+                        let respostaBot = result.resposta_bot
+                        resposta += `${respostaBot}`
+                        msg.msg_user.toLowerCase().replace(atendimento, '')
+                        this.sendResposta(msg.from_user, resposta, client)
+                    })
+                } 
+            })
+            .each('SELECT palavra_chave FROM respostas', [], (err, result) => {
+                let resposta = ''
+                if (err) throw err
+                let respostaBot = Object.values(result)[0]
+                if(msg.msg_user.toLowerCase().includes(respostaBot)){
+                    database.get('SELECT * FROM respostas WHERE palavra_chave=?', [respostaBot], (err, result) => {
+                        if (err) throw err
+                        let res = result.resposta_bot
+                        resposta += `${res}`
+                        this.sendResposta(msg.from_user, resposta, client)
+                    })
+                }
+            }) 
         })
     }
     async sendResposta(from, msg, client){
         await client.sendText(from, msg)
     }
-    // async getAtendimento(database, msge, client){
-    //     const chat_msg = msge.msg_user.toLowerCase()
-    //     const chat_from = msge.from_user
-    //     console.log(chat_msg);
-    //     await database.get('SELECT * FROM atendimentos WHERE palavra_chave=?', [chat_msg], (err, result) => {
-    //         if(err) throw err
-    //         if(chat_msg.includes())
-    //         console.log('Dados da tabela: ', );
-    //         console.log(chat_from, chat_msg);
-    //     })
-    // }
     async closeDatabase(database){
         let msg = ''
         msg = 'Fechando conexão com o banco de dados'

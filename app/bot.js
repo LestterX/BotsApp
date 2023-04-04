@@ -83,7 +83,7 @@ module.exports = () => venomBot.create({
             funcs.regMessageUser(database, msg)
             //await client.sendText(msg['from_user'], 
             funcs.getResposta(database, msg, client)
-            funcs.closeDatabase(database)
+            // funcs.closeDatabase(database)
         }
         if(message.isGouping){ //Mensagens de Grupo
             return console.log('Mensagem de Grupo Recebida')
