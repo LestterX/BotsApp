@@ -2,23 +2,17 @@ const sql = require('sqlite3').verbose()
 const path = require('path')
 
 class Create{
-    constructor(){
-        this.error_msg = null
-        this.tb_clientes = false
-        this.tb_mensagens = false
-        this.tb_respostas = false
-        this.tb_status = [
-            this.tb_clientes,
-            this.tb_mensagens,
-            this.tb_respostas
-        ]
-    }
+    constructor(){}
     init(){
         const db = new sql.Database(path.resolve(__dirname, 'database.db'), e => {
             if(e){
                 return console.log('Um erro ocorreu ao se conectar banco de dados\n');
             }
             console.log('Conectado ao banco de dados com sucesso\n');
+        })
+        const dbLog = new sql.Database(path.resolve(__dirname, 'database-log.db'), err => {
+            if(err) throw err
+            console.log('Conectado ao log com sucesso');
         })
         db.serialize(() => {
             db.run(`CREATE TABLE IF NOT EXISTS clientes(
@@ -31,10 +25,8 @@ class Create{
                 hora_cadastro TEXT NOT NULL
             );`, (e) => {
                 if(e){
-                    // this.tb_clientes = false
                     return console.log('Erro ao criar tabela CLIENTES\n', e);
                 }
-                // this.tb_clientes = true
                 return console.log('Tabela CLIENTES criada com sucesso');
             })
             db.run(`CREATE TABLE IF NOT EXISTS mensagens(
@@ -46,10 +38,8 @@ class Create{
                 user_msg_hora TEXT NOT NULL
             );`, (e) => {
                 if(e){
-                    // this.tb_mensagens = false
                     return console.log('Erro ao criar tabela MENSAGENS\n', e);
                 }
-                // this.tb_mensagens = true
                 return console.log('Tabela MENSAGENS criada com sucesso');
             })
             db.run(`CREATE TABLE IF NOT EXISTS respostas(
@@ -58,10 +48,8 @@ class Create{
                 resposta_bot TEXT NOT NULL
             );`, (e) => {
                 if(e){
-                    // this.tb_respostas = false
                     return console.log('Erro ao criar tabela RESPOSTAS\n', e);
                 }
-                // this.tb_respostas = true
                 return console.log('Tabela RESPOSTAS criada com sucesso');
             })
             db.run(`CREATE TABLE IF NOT EXISTS atendimentos(
@@ -70,27 +58,28 @@ class Create{
                 resposta_bot TEXT NOT NULL
             );`, (e) => {
                 if(e){
-                    // this.atendimentos = false
                     return console.log('Erro ao criar tabela ATENDIMENTOS\n', e);
                 }
-                // this.atendimentos = true
                 return console.log('Tabela ATENDIMENTOS criada com sucesso');
             })
-            db.run(`CREATE TABLE IF NOT EXISTS botlog(
+            dbLog.run(`CREATE TABLE IF NOT EXISTS botlog(
                 id INTEGER NOT NULL PRIMARY KEY,
                 logdata TEXT NOT NULL
             );`, (e) => {
                 if(e){
-                    // this.atendimentos = false
                     return console.log('Erro ao criar tabela BOTLOG\n', e);
                 }
-                // this.atendimentos = true
                 return console.log('Tabela BOTLOG criada com sucesso');
             })
         })
         db.close((e) => {
             if(e){
                 return console.log("Erro ao fechar banco de dados\n", e.message);
+            }
+        })
+        dbLog.close((e) => {
+            if(e){
+                return console.log("Erro ao fechar log\n", e.message);
             }
         })
     }
@@ -100,5 +89,4 @@ class Create{
         })
     }
 }
-
 module.exports = Create

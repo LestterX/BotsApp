@@ -2,3 +2,5 @@ node_modules
 tokens
 util
 ./app/database/database.db
+./app/database/database-log.db
+./up.sh

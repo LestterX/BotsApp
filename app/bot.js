@@ -1,8 +1,7 @@
 const venomBot = require('venom-bot')
 const path = require('path')
-const Functions = require(path.resolve(__dirname, 'database', 'Functions'))//('./database/Functions')
+const Functions = require(path.resolve(__dirname, 'database', 'Functions'))
 const funcs = new Functions()
-
 
 module.exports = () => venomBot.create({
     session: 'Loja',
@@ -62,7 +61,6 @@ module.exports = () => venomBot.create({
             }catch(e){
                 pushname = null
             }
-            // if(message.sender.pushname === undefined) message.sender.pushname
             const cliente = {
                 bot_watch: true,
                 pushname: pushname,
@@ -78,12 +76,9 @@ module.exports = () => venomBot.create({
                 user_msg_data: getData(),
                 user_msg_hora: getTime()
             }
-            // await client.sendText(message.from, 'Teste de Atendimento com Robô')
             funcs.hasClient(database, cliente, true)
             funcs.regMessageUser(database, msg)
-            //await client.sendText(msg['from_user'], 
             funcs.getResposta(database, msg, client, cliente)
-            // funcs.closeDatabase(database)
         }
         if(message.isGouping){ //Mensagens de Grupo
             return console.log('Mensagem de Grupo Recebida')
@@ -96,7 +91,6 @@ module.exports = () => venomBot.create({
 }).catch(e => {
     return e
 })
-
 function getData(){
     const data = new Date()
     let date = `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`
