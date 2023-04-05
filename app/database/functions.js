@@ -2,6 +2,7 @@ const sqlite3 = require('sqlite3').verbose()
 const path = require('path')
 const {readFile, writeFile} = require('fs').promises
 const log = path.resolve(__dirname, '..', 'botLog.txt')
+const atendimentosJSON = require(path.resolve(__dirname, '..', 'atendimentos.json'))
 
 class Functions{
     constructor(){
@@ -89,13 +90,13 @@ class Functions{
             return console.log(msg);
         })
     }
-    async getResposta(database, msg, client){
+    async getResposta(database, msg, client, cliente){
         await database.serialize(() => {
             database.each('SELECT palavra_chave FROM atendimentos', [], (err, result) => {
-                let resposta = ''
+                let resposta = `Olá, *${cliente.pushname}*! \n\n`
                 if (err) throw err
                 let atendimento = Object.values(result)[0]
-                if(msg.msg_user.toLowerCase().includes(atendimento)){
+                if(msg.msg_user.toLowerCase() === atendimento/*.includes(atendimento)*/){
                     database.get('SELECT * FROM atendimentos WHERE palavra_chave=?', [atendimento], (err, result) => {
                         if (err) throw err
                         let respostaBot = result.resposta_bot
@@ -113,7 +114,7 @@ class Functions{
                     database.get('SELECT * FROM respostas WHERE palavra_chave=?', [respostaBot], (err, result) => {
                         if (err) throw err
                         let res = result.resposta_bot
-                        resposta += `${res}`
+                        resposta += atendimentosJSON[`${res}`]
                         this.sendResposta(msg.from_user, resposta, client)
                     })
                 }

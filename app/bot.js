@@ -5,9 +5,9 @@ const funcs = new Functions()
 
 
 module.exports = () => venomBot.create({
-    session: this.session,
+    session: 'Loja',
     folderNameToken: 'tokens',
-    headless: false,
+    headless: true,
     devtools: false,
     useChrome: true,
     debug: false,
@@ -82,7 +82,7 @@ module.exports = () => venomBot.create({
             funcs.hasClient(database, cliente, true)
             funcs.regMessageUser(database, msg)
             //await client.sendText(msg['from_user'], 
-            funcs.getResposta(database, msg, client)
+            funcs.getResposta(database, msg, client, cliente)
             // funcs.closeDatabase(database)
         }
         if(message.isGouping){ //Mensagens de Grupo
