@@ -7,7 +7,7 @@
     "dev": "",
     "dbtest": "node ./app/database/database_tester.js"
   },
-  "keywords": [],
+  "keywords": ["botsapp", "lestter gabriel", "lestterx", "lestter x", "upjetcell", "upjet"],
   "author": "Lestter Gabriel (LinkedIn) / LestterX (GitHub)",
   "license": "ISC",
   "devDependencies": {

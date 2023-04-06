@@ -84,8 +84,11 @@ class Functions{
     }
     async getResposta(database, msg, client, cliente){
         await database.serialize(() => {
+            const botIdMsg = '*BotsApp* - Assistente Virtual 🤖 \n\n'
             database.each('SELECT palavra_chave FROM atendimentos', [], (err, result) => {
-                let resposta = `Olá, *${cliente.pushname}*! \n\n`
+                let resposta = ''
+                resposta += botIdMsg
+                resposta += `Olá, *${cliente.pushname}*! \n\n`
                 if (err) throw err
                 let atendimento = Object.values(result)[0]
                 if(msg.msg_user.toLowerCase() === atendimento/*.includes(atendimento)*/){
@@ -106,6 +109,7 @@ class Functions{
                     database.get('SELECT * FROM respostas WHERE palavra_chave=?', [respostaBot], (err, result) => {
                         if (err) throw err
                         let res = result.resposta_bot
+                        resposta += botIdMsg
                         resposta += atendimentosJSON[`${res}`]
                         this.sendResposta(msg.from_user, resposta, client)
                     })
@@ -114,7 +118,6 @@ class Functions{
         })
     }
     async sendResposta(from, msg, client){
-        if (msg === '' || typeof(msg) === null || typeof(msg) === undefined || msg === 'null' || msg === 'undefined') return
         await client.sendText(from, msg)
     }
     async closeDatabase(database){
