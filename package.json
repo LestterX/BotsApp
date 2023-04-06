@@ -1,6 +1,6 @@
 {
   "name": "botsapp",
-  "version": "1.3.6-Stable",
+  "version": "1.3.9-Stable",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,12 +8,13 @@
     "dbtest": "node ./app/database/database_tester.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Lestter Gabriel (LinkedIn) / LestterX (GitHub)",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.21"
   },
   "dependencies": {
+    "sqlite3": "^5.1.6",
     "venom-bot": "^4.3.7"
   }
 }

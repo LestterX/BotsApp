@@ -1,4 +1,13 @@
 {
     "endereco": "*ENDEREÇO* \n\nAvenida Estrada de Belém, 1349 - Loja A, Recife, PE - CEP 00000-000",
-    "horario": "*HORÁRIO DE FUNCIONAMENTO* \n\nSegunda à Sexta: *das 8hrs às 18hrs* \nNos Sábados: *das 8hrs às 16hrs* \n\n*Obs.: Consulte feriados*"
+    "horario": "*HORÁRIO DE FUNCIONAMENTO* \n\nSegunda à Sexta: *das 8hrs às 18hrs* \nNos Sábados: *das 8hrs às 16hrs* \n\n*Obs.: Consulte feriados*",
+    "impressaoce": "*IMPRESSÃO COMUM* \n*# Primeira Página: R$2,00* \n- Próximas Preto e Branco: R$0,80 \n- Próximas Colorido: R$1,00 \n\n*IMPRESSÃO ESPECIAL* \n- Papel Adesivo Brilhoso: R$5,00 \n- Papel Foto Brilhoso: R$4,00 \n- Papel Cartão Fosco: R$4,00",
+    "cartaovisita": "*CARTÕES DE VISITA* \n\n*VERNIZ TOTAL* \n*#SÓ FRENTE*\n- 500und: R$100,00 \n- 1.000und: R$130,00 \n*#FRENTE E VERSO* \n- 500und: R$120,00 \n- 1.000und: R$150,00 \n\n*VERNIZ LOCALIZADO* \n*#SÓ FRENTE* \n- 500und: R$140,00 \n- 1.000und: R$160,00 \n*#FRENTE E VERSO* \n- 500und: R$180,00 \n- 1.000und: R$200,00 \n\n*IMPRESSÃO FOSCA* \n*#SÓ FRENTE* \n- 500und: R$140,00 \n- 1.000und: R$160,00 \n*#FRENTE E VERSO* \n- 500und: R$180,00 \n- 1.000und: R$200,00 \n\n*Obs.: Quantidade mínima: 500und \nConsulte quantidade acima de 1.000und*",
+    "panfleto": "*PANFLETOS (PADRÃO 10X14)* \n\n- 1.000und: R$140,00 (Apenas Frente) \n- 2.500: R$180,00 (Com verso: R$250,00)",
+    "banner": "*BANNER - Algumas medidas* \n\n- 40 x 60: R$25,00 \n- 50 x 70: R$35,00 \n- 70 x 120: R$50,00 \n\n*Obs.: Consulte outras medidas*",
+    "arte": "*ARTES* \n\n- A partir de *R$30,00* para panfletos, cartões de visita e banner \n\n- Adição de nome em topo de bolo a partir de *R$5,00* \n\n- Topos de bolo a partir de *R$10,00* \n\n*Obs.: Consulte sua idea para orçamento*",
+    "consertos": "Fazemos varios serviços de reparo, manutenção, substituição de peças em computadores, seja portátil ou de mesa, celulares e impressoras \n\n*Obs.: Consulte para saber mais*",
+    "carimbos": "*CARIMBOS* \n\n*Consulte preços*",
+    "pix": "*CHAVE PIX* \n\n-------------------------- \n*04584971420* \n-------------------------- \nCPF \nIsmael Severino \n\n*Obs.: Favor enviar comprovante após transferência*",
+    "": "semResposta"
 }

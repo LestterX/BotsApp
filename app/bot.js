@@ -6,7 +6,7 @@ const funcs = new Functions()
 module.exports = () => venomBot.create({
     session: 'Loja',
     folderNameToken: 'tokens',
-    headless: true,
+    headless: false,
     devtools: false,
     useChrome: true,
     debug: false,

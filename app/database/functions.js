@@ -114,6 +114,7 @@ class Functions{
         })
     }
     async sendResposta(from, msg, client){
+        if (msg === '' || typeof(msg) === null || typeof(msg) === undefined || msg === 'null' || msg === 'undefined') return
         await client.sendText(from, msg)
     }
     async closeDatabase(database){
